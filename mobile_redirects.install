@@ -1,0 +1,44 @@
+<?php
+//$Id//
+
+/**
+	* Implementation of hook_install().
+	*/
+	
+function mobile_redirects_install() {
+	drupal_install_schema('mobile_redirects')
+}
+
+/**
+	* Implementation of hook_uninstall().
+	*/
+	
+function mobile_redirects_uninstall() {
+	drupal_uninstall_schema('mobile_redirects');
+}
+
+/**
+	* Implementatino of hook_schema
+	*/
+	
+function mobile_redirects_schema() {
+	$schema['mobile_redirects'] = array(
+		'description' => t('Redirects for mobile users'),
+		'fields' => array(
+			'rid' => array(
+				'type' => 'int',
+				'not null' => TRUE),
+			'path' => array(
+				'type' => 'text',
+				'length' => '50',
+				'not null' => TRUE),
+			'redirect' => array(
+				'type' => 'text',
+				'length' => '50',
+				'not null' => TRUE),
+		),
+		'primary key' => array('rid'),
+	);
+	
+return $schema;
+}
