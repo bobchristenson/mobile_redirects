@@ -1,0 +1,24 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ *   Allows redirection of mobile users to alternate paths
+ */
+ 
+ /**
+ * Implementation of hook_menu().
+ */
+function mobile_redirects_menu() {
+  $items['admin/settings/mobile_redirects'] = array(
+    'file' => 'mobile_redirects.admin.inc',
+    'title' => 'Mobile Redirects Settings',
+    'description' => 'Set original path and mobile redirect path for mobile redirections',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('mobile_redirects_settings'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+

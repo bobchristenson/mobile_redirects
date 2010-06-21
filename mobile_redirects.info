@@ -1,6 +1,6 @@
 ; $Id $
 name = Mobile Redirects
 description = Allows Custom Mobile Redirects
-package = Other
+package = Mobile
 version = "1.0"
 core = 6.x
