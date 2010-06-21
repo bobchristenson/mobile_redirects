@@ -28,9 +28,16 @@ function mobile_redirects_delete(&$form_state) {
 
 
 	$form['submit'] = array('#type' => 'submit', '#value' => t('Delete Redirect'));
+	
+	 $form['existing_redirects'] = array(
+	 	'#type' => 'fieldset',
+	 	'#title' => t('Existing Redirects'),
+	 	'#description' => t('In the future this will list all the current redirect paths'),
+	 );
+	 	
+	
 	return $form;
 }
-
 
 /**
 	* Handle submission of form to database
