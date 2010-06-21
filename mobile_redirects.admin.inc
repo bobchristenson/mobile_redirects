@@ -14,7 +14,7 @@
 	* see system_settings_form().
 	*/
 
-function mobile_redirects_settings() {
+function mobile_redirects_settings(&$form_state) {
 	$form = array();
   $form['activate'] = array(
     '#type' => 'checkbox',
@@ -22,7 +22,7 @@ function mobile_redirects_settings() {
     '#description' => t('When checking this box, your mobile redirects below will be active.'),
   );
   
-  $form['src'] = array(
+  $form['path'] = array(
     '#type' => 'textfield',
     '#title' => t('Existing system path'),
     '#maxlength' => 128,
@@ -31,7 +31,7 @@ function mobile_redirects_settings() {
     '#field_prefix' => url(NULL, array('absolute' => TRUE)) . (variable_get('clean_url', 0) ? '' : '?q='),
     '#required' => TRUE,
   );
-  $form['dst'] = array(
+  $form['redirect'] = array(
     '#type' => 'textfield',
     '#title' => t('Mobile Redirect'),
     '#maxlength' => 128,
@@ -44,6 +44,23 @@ function mobile_redirects_settings() {
 	$form['submit'] = array('#type' => 'submit', '#value' => t('Add Redirect'));
 
   return $form;
+}
+
+
+/**
+	* Handle submission of form to database
+	*/
+	
+function mobile_redirects_settings_submit() {
+	
+	$mr_path = $form_state['values']['path'];
+	$mr_redirect = $form_state['values']['redirect'];
+	
+//	db_query('DELETE FROM {mobile_redirects} WHERE path = %s AND redirect = %s', $mr_path, $mr_redirect);
+	db_query("INSERT INTO {mobile_redirects} (path, redirect) VALUES ('%s', '%s')", $mr_path, $mr_redirect);
+	drupal_set_message(t('Your Redirect Has Been Saved.  Horray!'));
+	
+	
 }
 
 

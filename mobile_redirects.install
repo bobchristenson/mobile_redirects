@@ -6,7 +6,7 @@
 	*/
 	
 function mobile_redirects_install() {
-	drupal_install_schema('mobile_redirects')
+	drupal_install_schema('mobile_redirects');
 }
 
 /**
@@ -18,7 +18,7 @@ function mobile_redirects_uninstall() {
 }
 
 /**
-	* Implementatino of hook_schema
+	* Implementation of hook_schema
 	*/
 	
 function mobile_redirects_schema() {
@@ -26,8 +26,9 @@ function mobile_redirects_schema() {
 		'description' => t('Redirects for mobile users'),
 		'fields' => array(
 			'rid' => array(
-				'type' => 'int',
-				'not null' => TRUE),
+				'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,),
 			'path' => array(
 				'type' => 'text',
 				'length' => '50',
