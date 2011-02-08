@@ -2,5 +2,6 @@
 name = Mobile Redirects
 description = Allows Custom Mobile Redirects
 package = Mobile
-version = "1.0"
 core = 6.x
+
+dependencies[] = mobile_tools

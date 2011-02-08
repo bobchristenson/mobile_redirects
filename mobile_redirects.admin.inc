@@ -41,7 +41,7 @@ function mobile_redirects_settings(&$form_state) {
 
 
 /**
-	* Handle submission of form to database
+	* Handle additions to database
 	*/
 	
 function mobile_redirects_settings_submit($form, $form_state) {
@@ -51,10 +51,60 @@ function mobile_redirects_settings_submit($form, $form_state) {
 	
 	db_query("DELETE FROM {mobile_redirects} WHERE path = '%s' AND redirect = '%s'", $mr_path, $mr_redirect);
 	db_query("INSERT INTO {mobile_redirects} (path, redirect) VALUES ('%s', '%s')", $mr_path, $mr_redirect);
-	drupal_set_message(t('Your Redirect Has Been Saved.  Horray!'));
-	
-	
+	drupal_set_message(t('Your Redirect Has Been Saved.  Horray!'));	
 }
+
+
+/**
+	* Setup form to delete entries
+	*/
+function mobile_redirects_delete(&$form_state) {
+
+	$sql = 'SELECT * FROM {mobile_redirects}';
+	$result = pager_query(db_rewrite_sql($sql), 200, 0);
+	$redirects = array();
+	$paths = array();
+
+	while ($data = db_fetch_array($result)) {
+		$redirects[] .= $data['redirect'];
+		$paths[] .= $data['path'];
+	}
+
+	
+	 $form['existing_redirects'] = array(
+	 	'#type' => 'fieldset',
+	 	'#title' => t('Existing Redirects'),
+	 	'#description' => t('Check the path redirects you want to delete'),
+	 );
+
+	 $form['existing_redirects']['list'] = array(
+	 	'#type' => 'checkboxes',
+	 	'#options' => $redirects,
+	 	
+	 );
+
+	$form['submit'] = array('#type' => 'submit', '#value' => t('Delete Redirect'));
+	return $form;
+}
+
+/**
+	* Handle removals from database
+	*/
+	
+function mobile_redirects_delete_submit ($form, $form_state) {
+
+	$checked_boxes = array();
+	$form_state_array = $form_state['values']['existing_redirects']['list'];
+	foreach($form_state_array as $checkbox) {
+		$checked_boxes[] = $checkbox;
+	}	
+	foreach($checked_boxes as $checked_box)	{
+		db_query("DELETE FROM {mobile_redirects} WHERE redirect = '%s'", $checked_box);
+	}		
+	
+	drupal_set_message(t('Your Redirect Has Been Deleted.  <br /><em>(I hope you really wanted to do that!)</em>'));
+}	
+
 
 
 
