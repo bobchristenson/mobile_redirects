@@ -69,6 +69,7 @@ function mobile_redirects_delete(&$form_state) {
 		$redirects[] .= $data['redirect'];
 		$paths[] .= $data['path'];
 	}
+	
 
 	
 	 $form['existing_redirects'] = array(
@@ -80,30 +81,25 @@ function mobile_redirects_delete(&$form_state) {
 	 $form['existing_redirects']['list'] = array(
 	 	'#type' => 'checkboxes',
 	 	'#options' => $redirects,
+	 	'#default_value' => NULL,
 	 	
 	 );
 
-	$form['submit'] = array('#type' => 'submit', '#value' => t('Delete Redirect'));
+	$form['submit'] = array('#type' => 'submit', '#value' => t('Delete Redirects'));
 	return $form;
 }
 
 /**
 	* Handle removals from database
+	* THIS DOESNT WORK, OBVIOUSLY, cant get checkbox value on submit
 	*/
-	
-function mobile_redirects_delete_submit ($form, $form_state) {
+function mobile_redirects_delete_submit(&$form, $form_state) {
 
-	$checked_boxes = array();
-	$form_state_array = $form_state['values']['existing_redirects']['list'];
-	foreach($form_state_array as $checkbox) {
-		$checked_boxes[] = $checkbox;
+
+  
+  $values = form_type_checkbox_value($form, $form_state['clicked_button']['#post']);
+  print $values;
 	}	
-	foreach($checked_boxes as $checked_box)	{
-		db_query("DELETE FROM {mobile_redirects} WHERE redirect = '%s'", $checked_box);
-	}		
-	
-	drupal_set_message(t('Your Redirect Has Been Deleted.  <br /><em>(I hope you really wanted to do that!)</em>'));
-}	
 
 
 

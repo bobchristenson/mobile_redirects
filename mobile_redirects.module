@@ -39,12 +39,13 @@
 function mobile_redirects_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
   if($op == 'view') {
     if (mobile_tools_is_mobile_device()) 	{
-		//find the current path
-		//TODO: make this work without path module
-		$path = drupal_get_path_alias($_GET['q']);
-		$theresult = db_result(db_query('SELECT redirect FROM {mobile_redirects} WHERE path ="%s"', $path));
-		if(!empty($theresult)) {
-			drupal_goto($theresult);
-		};
+      //find the current path
+      //TODO: make this work without path module
+      $path = drupal_get_path_alias($_GET['q']);
+      $theresult = db_result(db_query('SELECT redirect FROM {mobile_redirects} WHERE path ="%s"', $path));
+      if(!empty($theresult)) {
+        drupal_goto($theresult);
+      };
+    }
   }
 }
